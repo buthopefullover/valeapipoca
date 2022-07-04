@@ -5,5 +5,4 @@ import router from "./router"
 
 import db from "./services/UserService"
 
-Vue.prototype.$http = db
-Vue.createApp(App).use(router).mount('#app')
+Vue.createApp(App).use(router).mount('#app').config.globalProperties.$http = db;
