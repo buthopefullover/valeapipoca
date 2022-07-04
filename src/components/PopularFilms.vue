@@ -20,10 +20,7 @@
         components: { 
             FilmItem,
         },
-        async mounted() {
-            const response = await this.$http.getMovies()
-            console.log(response[0])
-        },
+        
     }
 </script>
 

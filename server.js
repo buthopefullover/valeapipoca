@@ -28,9 +28,9 @@ app.get('/movies', function (req, res){
     let movies = [];
     client.connect();
     client.query('SELECT * FROM movies;', (err, res) => {
-    if (err) throw err;
-    movies = res;
-    client.end();
+        if (err) throw err;
+        movies = res;
+        client.end();
     });
     res.json(movies)
 });
