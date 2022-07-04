@@ -1,26 +1,22 @@
 import axios from 'axios';
 
-// Connection to the database
-const { Client } = require('pg');
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+// the single Axios instance we use for calls
+const apiClient = axios.create({
+  //baseURL: 'http://localhost:5000',
+  baseURL: process.env.DATABASE_URL, // with ssl?
+  withCredentials: false, // this is the default
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
 });
+
 
 
 export default {
   /* with pagination */
   getMovies() {
-    let movies = [];
-    client.connect();
-    client.query('SELECT original_title FROM movie;', (err, res) => {
-      if (err) throw err;
-      movies = res;
-      client.end();
-    });
-
-    return movies
+    console.log(process.env.DATABASE_URL);
+    return apiClient.get('/movies');
   },
 };
