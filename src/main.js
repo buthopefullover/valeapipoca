@@ -5,5 +5,4 @@ import router from "./router"
 
 import db from "./services/UserService"
 
-const app = Vue.createApp(App).use(router).mount('#app')
-app.config.globalProperties.$http = db;
+Vue.createApp(App).use(router).mount('#app').provide('$http', db)
