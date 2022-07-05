@@ -25,6 +25,7 @@ app.use("/", serveStatic(path.join(__dirname, "/dist")));
 //});
 
 app.get('/movies', function (req, res){
+    console.log('qualquer coisa')
     let movies = [];
     client.connect();
     client.query('SELECT * FROM movies;', (err, res) => {
@@ -38,3 +39,4 @@ app.get('/movies', function (req, res){
 
 app.listen(port);
 console.log(`app is listening on port: ${port}`);
+console.log(process.env.DATABASE_URL);
