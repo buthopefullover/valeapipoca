@@ -16,7 +16,7 @@ const apiClient = axios.create({
 export default {
   /* with pagination */
   getMovies() {
-    console.log(process.env.DATABASE_URL);
+    console.log(process.env.DATABASE_URL+'?ssl=true');
     return apiClient.get('/movies');
   },
 };
