@@ -1,5 +1,4 @@
 const express = require("express");
-const morgan = require('morgan')
 const serveStatic = require("serve-static");
 const path = require("path");
 const port = process.env.PORT || 8080;
@@ -20,10 +19,10 @@ const app = express();
 //here we are configuring dist to serve app files
 app.use("/", serveStatic(path.join(__dirname, "/dist")));
 
-app.use(morgan('combined'));
-app.get('/', (req, res) =>{
-  res.send('SOCORRO PELO AMOR')
-});
+// this * route is to serve project on different page routes except root `/`
+//app.get(/.*/, function (req, res) {
+//  res.sendFile(path.join(__dirname, "/dist/index.html"));
+//});
 
 app.get('/movies', function (req, res){
     let movies = [];
