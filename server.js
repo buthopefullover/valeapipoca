@@ -12,7 +12,7 @@ const client = new Client({
   }
 });
 
-
+console.log(process.env.DATABASE_URL);
 //
 const app = express();
 
