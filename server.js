@@ -12,7 +12,7 @@ const client = new Client({
   }
 });
 
-console.log(process.env.DATABASE_URL);
+
 //
 const app = express();
 
@@ -30,7 +30,7 @@ app.get('/movies', function (req, res){
     client.query('SELECT * FROM movies;', (err, res) => {
         if (err) throw err;
         movies = res;
-        console.log(process.env.DATABASE_URL);
+
         client.end();
     });
     res.json(movies)
