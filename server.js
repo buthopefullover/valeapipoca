@@ -1,4 +1,5 @@
 const express = require("express");
+const history = require("connect-history-api-fallback")
 const serveStatic = require("serve-static");
 const path = require("path");
 const port = process.env.PORT || 8080;
@@ -16,13 +17,14 @@ const client = new Client({
 //
 const app = express();
 
+app.use(history())
 //here we are configuring dist to serve app files
 app.use("/", serveStatic(path.join(__dirname, "/dist")));
 
 // this * route is to serve project on different page routes except root `/`
-//app.get(/.*/, function (req, res) {
-//  res.sendFile(path.join(__dirname, "/dist/index.html"));
-//});
+app.get(/.*/, function (req, res) {
+  res.sendFile(path.join(__dirname, "/dist/index.html"));
+});
 
 app.get('/movies', function (req, res){
     console.log('qualquer coisa')
@@ -31,7 +33,7 @@ app.get('/movies', function (req, res){
     client.query('SELECT * FROM movies;', (err, res) => {
         if (err) throw err;
         movies = res;
-
+        console.log(res[0]);
         client.end();
     });
     res.json(movies)

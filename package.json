@@ -2,9 +2,15 @@
   "name": "letterboxd",
   "version": "0.1.0",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "start": "node --inspect server.js"
+  },
   "dependencies": {
     "axios": "^0.27.2",
+    "connect-history-api-fallback": "^2.0.0",
     "core-js": "^3.8.3",
     "express": "^4.18.1",
     "morgan": "^1.10.0",
