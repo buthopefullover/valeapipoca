@@ -16,16 +16,6 @@ const client = new Client({
 
 //
 const app = express();
-
-app.use(history())
-//here we are configuring dist to serve app files
-app.use("/", serveStatic(path.join(__dirname, "/dist")));
-
-// this * route is to serve project on different page routes except root `/`
-app.get(/.*/, function (req, res) {
-  res.sendFile(path.join(__dirname, "/dist/index.html"));
-});
-
 app.get('/movies', function (req, res){
     console.log('qualquer coisa')
     let movies = [];
@@ -38,6 +28,17 @@ app.get('/movies', function (req, res){
     });
     res.json(movies)
 });
+
+app.use(history())
+//here we are configuring dist to serve app files
+app.use("/", serveStatic(path.join(__dirname, "/dist")));
+
+// this * route is to serve project on different page routes except root `/`
+app.get(/.*/, function (req, res) {
+  res.sendFile(path.join(__dirname, "/dist/index.html"));
+});
+
+
 
 app.listen(port);
 console.log(`app is listening on port: ${port}`);
