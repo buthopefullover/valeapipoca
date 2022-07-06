@@ -16,14 +16,13 @@
 
 <script>
     import FilmItem from "./items/FilmItem"
-    import db from "../services/UserService"
+    import UserService from "@/services/UserService";
     export default {
         components: { 
             FilmItem,
         },
         async mounted() {
-            const response = await db.getMovies()
-            console.log(response[0])
+            await UserService.getMovies();
         },
     }
 </script>
