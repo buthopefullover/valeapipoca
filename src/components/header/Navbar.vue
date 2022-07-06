@@ -11,7 +11,7 @@
                 </li>
                 <li>
                     <router-link to="/actors" class="ml-5">
-                        Actors
+                        Actorsss
                     </router-link>
                 </li>
                 <li>

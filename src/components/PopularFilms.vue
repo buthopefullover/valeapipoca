@@ -22,7 +22,8 @@
             FilmItem,
         },
         async mounted() {
-            await UserService.getMovies();
+            const movies = await UserService.getMovies();
+            console.log('response: ', movies)
         },
     }
 </script>
