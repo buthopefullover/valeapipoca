@@ -11,12 +11,12 @@
                 </li>
                 <li>
                     <router-link to="/actors" class="ml-5">
-                        Actors
+                        Actorsss
                     </router-link>
                 </li>
                 <li>
                     <router-link to="/profile" class="ml-5">
-                        Profileeeee
+                        Profile
                     </router-link>
                 </li>
             </ul>
