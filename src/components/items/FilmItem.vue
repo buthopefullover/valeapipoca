@@ -1,9 +1,9 @@
 <template>
     <div >
-        <Tooltip text="Joker">
-            <router-link to="/film/11">
+        <Tooltip :text="movie.title">
+            <router-link :to="`/film/${movie.movie_id}`">
                 <img 
-                    src="@/assets/images/joker.jpg" 
+                    :src="posterPath" 
                     class="hover:border-4 hover:border-indigo-500/100" 
                 />
             </router-link>
@@ -14,6 +14,17 @@
 <script>
     import Tooltip from './Tooltip';
     export default {
+        props: {
+            movie: {
+                required: true
+            }
+        },
+
+        computed: {
+            posterPath() {
+                return "https://image.tmdb.org/t/p/w500/" +this.movie.poster_path;
+            }
+        },  
         components: { 
             Tooltip,
         },

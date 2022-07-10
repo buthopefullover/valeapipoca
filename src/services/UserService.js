@@ -15,9 +15,11 @@ const apiClient = axios.create({
 
 export default {
   /* with pagination */
-  getMovies() {
-    return apiClient.get('/movies').then((response) => {
-      console.log(response.data);
-    });
+  getMovies(page) {
+    return apiClient.get(`/movies/${page}`)
   },
+  getMovie(id) {
+    return apiClient.get(`/movie/${id}`)
+  },
+
 };

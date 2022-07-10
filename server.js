@@ -1,17 +1,18 @@
 const express = require("express");
+require('dotenv').config()
 // const history = require("connect-history-api-fallback")
 // const serveStatic = require("serve-static");
 // const path = require("path");
 const port = 30000 || 8081;
 
 // Connection to the database
-const { Client } = require('pg');
-const client = new Client({
+const { Pool } = require('pg');
+const client = new Pool({
     host: process.env.DBHOST,
     port: process.env.DBPORT,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE,
+    user: process.env.DBUSER,
+    password: process.env.DBPASSWORD,
+    database: process.env.DBNAME,
     ssl: {
         rejectUnauthorized: false
     }
@@ -23,19 +24,34 @@ const app = express();
 
 app.use(cors());
 
-app.get('/movies', function (req, result){
+app.get('/movies/:page', function (req, result){
+    let offset = (req.params.page-1) * 12;
+    client.connect();
+    client.query(`SELECT * FROM movie LIMIT 12 OFFSET ${offset}`, (err, res) => {
+        if(!err){
+            result.status(200).send(res.rows);
+        }else {
+            console.log(res.message);
+        }
 
-      client.connect();
-      client.query(`select * from movie fetch first 1 row only`, (err, res) => {
-          if(!err){
-              console.log(res.rows);
-              result.status(200).send(res.rows);
-          }else {
-              console.log(res.message);
-          }
+    })
+  client.end;
+});
 
-      })
-    client.end;
+app.get('/movie/:movieId', function (req, result){
+
+    client.connect();
+
+    client.query(`select * from movie where movie_id = ${req.params.movieId}`, (err, res) => {
+        if(!err){
+            console.log('tudo certo')
+            result.status(200).send(res.rows);
+        }else {
+            console.log(res.message);
+        }
+
+    })
+  client.end;
 });
 
 

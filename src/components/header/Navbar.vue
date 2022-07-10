@@ -1,7 +1,7 @@
 <template>
     <div class="h-20 flex justify-between container mx-auto">
         <!--logo and buttons-->
-        <div class="mt-5 flex">
+        <div class="flex">
             <img src="@/assets/images/logo.png" alt=""/>
             <ul class="flex mt-5">
                 <li>

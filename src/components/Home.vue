@@ -4,16 +4,19 @@
     </div>
     
     <div class="mx-auto">
-        <PopularFilms />
+        <div class="mx-5">
+             <h2 class="uppercase mt-5 text-lg font-semibold">
+                Popular on Letterboxd
+            </h2>
+        </div>
+
     </div>
 </template>
 
 <script>
-    import PopularFilms from "./PopularFilms"
     import Navbar from "./header/Navbar"
     export default {
         components: {
-            PopularFilms,
             Navbar,
         },
     }
