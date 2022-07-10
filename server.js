@@ -3,7 +3,7 @@ require('dotenv').config()
 // const history = require("connect-history-api-fallback")
 // const serveStatic = require("serve-static");
 // const path = require("path");
-const port = 30000 || 8081;
+const port = process.env.DBPORT || 8081;
 
 // Connection to the database
 const { Pool } = require('pg');
