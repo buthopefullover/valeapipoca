@@ -1,6 +1,6 @@
 <template>
     <div
-            class="dropdown "
+            class="dropdown z-40"
             :class="{ dropup: top }"
             @mouseleave="mouseLeave"
             @mouseover="mouseOver"
@@ -145,7 +145,10 @@
 <style>
 .dropdown {
   cursor: pointer;
-  position:absolute;
 
+}
+.dropdown-menu {
+  cursor: pointer;
+  position: absolute;
 }
 </style>

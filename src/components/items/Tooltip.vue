@@ -39,10 +39,10 @@ export default {
   padding: 5px 0;
   border-radius: 2px;
 
-  width: 120px;
+  width: 180px;
   bottom: 100%;
   left: 50%;
-  margin-left: -60px;
+  margin-left: -90px;
 
   opacity: 0;
   transition: opacity 1s;

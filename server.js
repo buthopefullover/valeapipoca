@@ -3,7 +3,7 @@ require('dotenv').config()
 // const history = require("connect-history-api-fallback")
 // const serveStatic = require("serve-static");
 // const path = require("path");
-const port = process.env.DBPORT || 8081;
+const port = 30000 || 8081;
 
 // Connection to the database
 const { Pool } = require('pg');
@@ -24,17 +24,34 @@ const app = express();
 
 app.use(cors());
 
-app.get('/movies/:page', function (req, result){
+app.get('/movies/:sort/:page', function (req, result){
     let offset = (req.params.page-1) * 12;
     client.connect();
-    client.query(`SELECT * FROM movie LIMIT 12 OFFSET ${offset}`, (err, res) => {
-        if(!err){
-            result.status(200).send(res.rows);
-        }else {
-            console.log(res.message);
-        }
-
-    })
+    console.log(req.params.sort)
+    switch (req.params.sort) {
+        case 'name':
+            console.log('entrei')
+            client.query(`SELECT * FROM movie ORDER BY title ASC LIMIT 12 OFFSET ${offset}`, (err, res) => {
+                if(!err){
+                    result.status(200).send(res.rows);
+                }else {
+                    console.log(res.message);
+                }
+        
+            })
+            break;
+        default:
+            console.log('default')
+            client.query(`SELECT * FROM movie LIMIT 12 OFFSET ${offset}`, (err, res) => {
+                if(!err){
+                    result.status(200).send(res.rows);
+                }else {
+                    console.log(res.message);
+                }
+        
+            })
+            break;
+    }
   client.end;
 });
 

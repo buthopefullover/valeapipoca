@@ -16,7 +16,7 @@ const routes =  [
         component: Film,
     },
     {
-        path: '/films',
+        path: '/films/:sort',
         name: 'films',
         component: Films,
     },

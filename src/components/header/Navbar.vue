@@ -5,7 +5,7 @@
             <img src="@/assets/images/logo.png" alt=""/>
             <ul class="flex mt-5">
                 <li>
-                    <router-link to="/films" class="ml-5">
+                    <router-link to="/films/popularity" class="ml-5">
                         Films
                     </router-link>
                 </li>

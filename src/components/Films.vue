@@ -2,9 +2,83 @@
     <div class="bg-eerie_black">
         <Navbar />
     </div>
+    <div class="justify-end flex mr-5 mt-5">
+        <DropdownMenu
+            v-model="show"
+            :right="right"
+            :hover="hover"
+            :interactive="interactive"
+            :transition="transition ? 'translate-fade-down':''"
+            :closeOnClickOutside="closeOnClickOutside"
+            
+        >
+            <template v-slot:default>
+                <button class="filter rounded-lg px-4 py-2 btn-primary dropdown-toggle">
+                    <span>DECADE</span>
+                    <svg class="w-4 h-4 ml-2 fill-current text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </button>
+            </template>
+            
+
+            <template v-slot:dropdown>
+                <a class="dropdown-item filter" href="#">Popularity</a>
+                <a class="dropdown-item filter" href="#">Film Name</a>
+                <a class="dropdown-item filter" href="#">Release Date</a>
+            </template>
+        </DropdownMenu>
+        <DropdownMenu
+            v-model="show"
+            :right="right"
+            :hover="hover"
+            :interactive="interactive"
+            :transition="transition ? 'translate-fade-down':''"
+            :closeOnClickOutside="closeOnClickOutside"
+            
+        >
+            <template v-slot:default>
+                <button class="filter rounded-lg px-8 py-2 btn-primary dropdown-toggle">GENRES</button>
+            </template>
+            
+
+            <template v-slot:dropdown>
+                <a class="dropdown-item filter" href="#">Popularity</a>
+                <router-link to="/films/name">
+                    <a class="dropdown-item filter">Film Name</a>
+                </router-link>
+                
+                <a class="dropdown-item filter" href="#">Release Date</a>
+            </template>
+        </DropdownMenu>
+        <DropdownMenu
+            v-model="show"
+            :right="right"
+            :hover="hover"
+            :interactive="interactive"
+            :transition="transition ? 'translate-fade-down':''"
+            :closeOnClickOutside="closeOnClickOutside"
+            
+        >
+            <template v-slot:default>
+                <button class="filter rounded-lg px-8 py-2 btn-primary dropdown-toggle">SORT BY</button>
+            </template>
+            
+
+            <template v-slot:dropdown>
+                <a class="dropdown-item filter" href="#">Popularity</a>
+                <a class="dropdown-item filter" href="#">Film Name</a>
+                <a class="dropdown-item filter" href="#">Release Date</a>
+            </template>
+        </DropdownMenu>
+        
+    </div>
+    <div class="mt-2">
+        <h1>There are x movies.</h1>
+    </div>
     
-    <div class="mx-5">
-        <div class="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 mt-5" gap-0>
+            
+    <div>
+            
+        <div class="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 mt-2 z-20" gap-0>
             <FilmItem :key="movie.id" v-for="movie in movies" :movie="movie"/>
         </div>
         <div class="text-center mt-5">
@@ -15,7 +89,6 @@
                 Next
             </a>
         </div>
-        
     </div>
 </template>
 
@@ -23,21 +96,40 @@
     let currentPage = 1;
     import Navbar from "./header/Navbar"
     import FilmItem from "./items/FilmItem"
+    import DropdownMenu from "./items/DropdownMenu"
     import UserService from "@/services/UserService";
     export default {
         components: { 
             Navbar,
             FilmItem,
+            DropdownMenu,
         },
         data: function() {
             return {
+                show: false,
+                right: false,
+                hover: false,
+                interactive: false,
+                transition: false,
+                closeOnClickOutside: true,
                 movies:[],
             };
+        },
+         watch: {
+            "$route.params.PostID": {
+            handler: function(value) {
+                console.log(value);
+                currentPage = 1;
+                this.fetchFilms(currentPage);
+            },
+            deep: true,
+            immediate: true,
+            },
         },
          methods: {
             async fetchFilms(page) {
                 try{
-                    const response = await UserService.getMovies(page);
+                    const response = await UserService.getMovies(page, this.$route.params.sort);
                     this.movies = response.data;
                     console.log(this.movies)
                 } catch (error) {
@@ -62,4 +154,23 @@
 </script>
 
 <style>
+.filter {
+    box-sizing: border-box;
+  background-color: #16191c;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  align-items:center;/*Vertical align*/
+  justify-content:center;/*horizontal align*/
+}
+
+.dropdown-item {
+    background-color: #8899aa;
+}
+
 </style>
