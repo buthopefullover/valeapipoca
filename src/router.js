@@ -11,7 +11,7 @@ const routes =  [
         component: Home,
     },
     {
-        path: '/film/:id',
+        path: '/film/:id/:info?',
         name: 'film',
         component: Film,
     },
@@ -20,6 +20,7 @@ const routes =  [
         name: 'films',
         component: Films,
     },
+    
 ]
 
 const router = createRouter({ history: createWebHistory(), routes })

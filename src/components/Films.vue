@@ -21,9 +21,20 @@
             
 
             <template v-slot:dropdown>
-                <a class="dropdown-item filter" href="#">Popularity</a>
-                <a class="dropdown-item filter" href="#">Film Name</a>
-                <a class="dropdown-item filter" href="#">Release Date</a>
+                <a class="dropdown-item filter" href="#">Tudo</a>
+                <a class="dropdown-item filter" href="#">2020</a>
+                <a class="dropdown-item filter" href="#">2010</a>
+                <a class="dropdown-item filter" href="#">2000</a>
+                <a class="dropdown-item filter" href="#">1990</a>
+                <a class="dropdown-item filter" href="#">1980</a>
+                <a class="dropdown-item filter" href="#">1970</a>
+                <a class="dropdown-item filter" href="#">1960</a>
+                <a class="dropdown-item filter" href="#">1950</a>
+                <a class="dropdown-item filter" href="#">1940</a>
+                <a class="dropdown-item filter" href="#">1930</a>
+                <a class="dropdown-item filter" href="#">1920</a>
+                <a class="dropdown-item filter" href="#">1910</a>
+                <a class="dropdown-item filter" href="#">1900</a>
             </template>
         </DropdownMenu>
         <DropdownMenu
@@ -42,10 +53,7 @@
 
             <template v-slot:dropdown>
                 <a class="dropdown-item filter" href="#">Popularity</a>
-                <router-link to="/films/name">
-                    <a class="dropdown-item filter">Film Name</a>
-                </router-link>
-                
+                <a class="dropdown-item filter">Film Name</a>
                 <a class="dropdown-item filter" href="#">Release Date</a>
             </template>
         </DropdownMenu>
@@ -64,8 +72,12 @@
             
 
             <template v-slot:dropdown>
-                <a class="dropdown-item filter" href="#">Popularity</a>
-                <a class="dropdown-item filter" href="#">Film Name</a>
+                <router-link to="/films/popularity">
+                    <a class="dropdown-item filter" href="#">Popularity</a>
+                </router-link>
+                <router-link to="/films/name">
+                    <a class="dropdown-item filter">Film Name</a>
+                </router-link>
                 <a class="dropdown-item filter" href="#">Release Date</a>
             </template>
         </DropdownMenu>
@@ -79,7 +91,7 @@
     <div>
             
         <div class="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 mt-2 z-20" gap-0>
-            <FilmItem :key="movie.id" v-for="movie in movies" :movie="movie"/>
+            <FilmItem :key="movie.movie_id" v-for="movie in movies" :movie="movie"/>
         </div>
         <div class="text-center mt-5">
             <a href="" v-on:click.prevent="previous()">
@@ -115,23 +127,11 @@
                 movies:[],
             };
         },
-         watch: {
-            "$route.params.PostID": {
-            handler: function(value) {
-                console.log(value);
-                currentPage = 1;
-                this.fetchFilms(currentPage);
-            },
-            deep: true,
-            immediate: true,
-            },
-        },
          methods: {
             async fetchFilms(page) {
                 try{
                     const response = await UserService.getMovies(page, this.$route.params.sort);
-                    this.movies = response.data;
-                    console.log(this.movies)
+                    this.movies = response.data.movies;
                 } catch (error) {
                     console.log(error);
                 }

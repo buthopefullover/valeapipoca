@@ -22,7 +22,13 @@
 
         computed: {
             posterPath() {
-                return "https://image.tmdb.org/t/p/w500/" +this.movie.poster_path;
+                if (this.movie.poster_path){
+                    return "https://image.tmdb.org/t/p/w500/" +this.movie.poster_path;
+                }
+                else {
+                    return "https://via.placeholder.com/500x750";
+                }
+                
             }
         },  
         components: { 
