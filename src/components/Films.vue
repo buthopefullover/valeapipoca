@@ -109,7 +109,7 @@
     import Navbar from "./header/Navbar"
     import FilmItem from "./items/FilmItem"
     import DropdownMenu from "./items/DropdownMenu"
-    import UserService from "@/services/UserService";
+    import UserService from "@/services/AppService";
     export default {
         components: { 
             Navbar,

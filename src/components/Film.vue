@@ -34,7 +34,7 @@
 
 <script>
     import Navbar from "./header/Navbar"
-    import UserService from "@/services/UserService";
+    import UserService from "@/services/AppService";
     import PersonItem from "./items/PersonItem";
     export default {
         
