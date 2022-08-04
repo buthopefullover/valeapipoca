@@ -1,10 +1,10 @@
 <template>
-    <div >
-        <Tooltip :text="person.character">
-            <router-link :to="`/actors/${person.id}`">
-                <a>person.name</a>
+    <div class="my-6">
+        <Tooltip :text="person.movieCharacter">
+            <router-link :to="`/person/${person.personID}`">
+                <a>{{person.name}}</a>
             </router-link>
-        </Tooltip>  
+        </Tooltip>
     </div>
 </template>
 
@@ -15,8 +15,8 @@
             person: {
                 required: true
             }
-        }, 
-        components: { 
+        },
+        components: {
             Tooltip,
         },
     }

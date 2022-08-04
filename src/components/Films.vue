@@ -3,73 +3,43 @@
         <Navbar />
     </div>
     <div class="justify-end flex mr-5 mt-5">
-        <DropdownMenu
-            v-model="show"
-            :right="right"
-            :hover="hover"
-            :interactive="interactive"
-            :transition="transition ? 'translate-fade-down':''"
-            :closeOnClickOutside="closeOnClickOutside"
-            
-        >
-            <template v-slot:default>
-                <button class="filter rounded-lg px-4 py-2 btn-primary dropdown-toggle">
-                    <span>DECADE</span>
-                    <svg class="w-4 h-4 ml-2 fill-current text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                </button>
-            </template>
-            
-
-            <template v-slot:dropdown>
-                <a class="dropdown-item filter" href="#">Tudo</a>
-                <a class="dropdown-item filter" href="#">2020</a>
-                <a class="dropdown-item filter" href="#">2010</a>
-                <a class="dropdown-item filter" href="#">2000</a>
-                <a class="dropdown-item filter" href="#">1990</a>
-                <a class="dropdown-item filter" href="#">1980</a>
-                <a class="dropdown-item filter" href="#">1970</a>
-                <a class="dropdown-item filter" href="#">1960</a>
-                <a class="dropdown-item filter" href="#">1950</a>
-                <a class="dropdown-item filter" href="#">1940</a>
-                <a class="dropdown-item filter" href="#">1930</a>
-                <a class="dropdown-item filter" href="#">1920</a>
-                <a class="dropdown-item filter" href="#">1910</a>
-                <a class="dropdown-item filter" href="#">1900</a>
-            </template>
-        </DropdownMenu>
-        <DropdownMenu
-            v-model="show"
-            :right="right"
-            :hover="hover"
-            :interactive="interactive"
-            :transition="transition ? 'translate-fade-down':''"
-            :closeOnClickOutside="closeOnClickOutside"
-            
-        >
+        <DropdownMenu v-model="show" :right="right" :hover="hover" :interactive="interactive"
+            :transition="transition ? 'translate-fade-down':''" :closeOnClickOutside="closeOnClickOutside">
             <template v-slot:default>
                 <button class="filter rounded-lg px-8 py-2 btn-primary dropdown-toggle">GENRES</button>
             </template>
-            
+
 
             <template v-slot:dropdown>
-                <a class="dropdown-item filter" href="#">Popularity</a>
-                <a class="dropdown-item filter">Film Name</a>
-                <a class="dropdown-item filter" href="#">Release Date</a>
+                <router-link to="/films/genre/12">
+                    <a class="dropdown-item filter" href="#">Adventure</a>
+                </router-link>
+                <router-link to="/films/genre/14">
+                    <a class="dropdown-item filter" href="#">Fantasy</a>
+                </router-link>
+                <router-link to="/films/genre/16">
+                    <a class="dropdown-item filter" href="#">Animation</a>
+                </router-link>
+                <router-link to="/films/genre/18">
+                    <a class="dropdown-item filter" href="#">Drama</a>
+                </router-link>
+                <router-link to="/films/genre/27">
+                    <a class="dropdown-item filter" href="#">Horror</a>
+                </router-link>
+                <router-link to="/films/genre/28">
+                    <a class="dropdown-item filter" href="#">Action</a>
+                </router-link>
+                <router-link to="/films/genre/35">
+                    <a class="dropdown-item filter" href="#">Comedy</a>
+                </router-link>
             </template>
         </DropdownMenu>
-        <DropdownMenu
-            v-model="show"
-            :right="right"
-            :hover="hover"
-            :interactive="interactive"
-            :transition="transition ? 'translate-fade-down':''"
-            :closeOnClickOutside="closeOnClickOutside"
-            
-        >
+        <DropdownMenu v-model="show" :right="right" :hover="hover" :interactive="interactive"
+            :transition="transition ? 'translate-fade-down':''" :closeOnClickOutside="closeOnClickOutside">
             <template v-slot:default>
                 <button class="filter rounded-lg px-8 py-2 btn-primary dropdown-toggle">SORT BY</button>
             </template>
-            
+
 
             <template v-slot:dropdown>
                 <router-link to="/films/popularity">
@@ -78,20 +48,22 @@
                 <router-link to="/films/name">
                     <a class="dropdown-item filter">Film Name</a>
                 </router-link>
-                <a class="dropdown-item filter" href="#">Release Date</a>
+                <router-link to="/films/release">
+                    <a class="dropdown-item filter" href="#">Release Date</a>
+                </router-link>
             </template>
         </DropdownMenu>
-        
+
     </div>
     <div class="mt-2">
-        <h1>There are x movies.</h1>
+        <h1 class="text-center text-white mb-12">There are {{this.total}} movies.</h1>
     </div>
-    
-            
+
+
     <div>
-            
+
         <div class="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 mt-2 z-20" gap-0>
-            <FilmItem :key="movie.movie_id" v-for="movie in movies" :movie="movie"/>
+            <FilmItem :key="movie.movie_id" v-for="movie in movies" :movie="movie" />
         </div>
         <div class="text-center mt-5">
             <a href="" v-on:click.prevent="previous()">
@@ -111,7 +83,7 @@
     import DropdownMenu from "./items/DropdownMenu"
     import UserService from "@/services/AppService";
     export default {
-        components: { 
+        components: {
             Navbar,
             FilmItem,
             DropdownMenu,
@@ -125,13 +97,18 @@
                 transition: false,
                 closeOnClickOutside: true,
                 movies:[],
+                total:0,
             };
         },
          methods: {
             async fetchFilms(page) {
                 try{
-                    const response = await UserService.getMovies(page, this.$route.params.sort);
+                    var search = (this.$route.params.search);
+                    if(search==null)
+                        search="";
+                    const response = await UserService.getMovies(page, this.$route.params.sort, search);
                     this.movies = response.data.movies;
+                    this.total = response.data.total
                 } catch (error) {
                     console.log(error);
                 }
@@ -146,7 +123,7 @@
                 console.log(currentPage)
                 this.fetchFilms(currentPage);
             }
-        }, 
+        },
         async mounted() {
             this.fetchFilms(currentPage);
         },

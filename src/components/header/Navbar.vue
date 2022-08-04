@@ -11,12 +11,7 @@
                 </li>
                 <li>
                     <router-link to="/actors" class="ml-5">
-                        Actorsss
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/profile" class="ml-5">
-                        Profile
+                        Actors
                     </router-link>
                 </li>
             </ul>
@@ -24,7 +19,7 @@
         <!--searchbar-->
         <Searchbar />
     </div>
-    
+
 </template>
 
 <script>
